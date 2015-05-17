@@ -1,0 +1,29 @@
+<assembly>
+	<id>bin</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<!-- Le jar -->
+		<fileSet>
+			<directory>target</directory>
+			<includes>
+				<include>files-archiver*.jar</include>
+			</includes>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<!-- Changelog -->
+		<fileSet>
+			<directory>src/changes</directory>
+			<outputDirectory>changes</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<!-- Dependances -->
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/</outputDirectory>
+			<scope>runtime</scope>
+		</dependencySet>
+	</dependencySets>
+</assembly>

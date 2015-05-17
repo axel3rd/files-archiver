@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+    <properties>
+        <title>ChangeLog</title>
+    </properties>
+    <body>
+        <release version="1.0.3" date="xx-08-2015" description="Update">
+            <action type="update" dev="ALO">Javadoc and comments French translation.</action>
+            <action type="update" dev="ALO">Dependencies update.</action>
+        </release>
+        <release version="1.0.2" date="11-11-2010" description="Fix">
+            <action type="fix" dev="ALO">Log messages.</action>
+            <action type="fix" dev="ALO">Directory removing with forbidden pattern.</action>
+        </release>
+        <release version="1.0.1" date="26-09-2010" description="Fix">
+            <action type="add" dev="ALO">Forbidden patterns in a path (to delete or not compressing).
+            </action>
+            <action type="add" dev="ALO">Log details.</action>
+        </release>
+        <release version="1.0.0" date="15-10-2006" description="Version">
+            <action type="add" dev="ALO">First version.</action>
+        </release>
+    </body>
+</document>
