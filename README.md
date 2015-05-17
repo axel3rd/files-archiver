@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/axel3rd/files-archiver.svg?branch=master)](https://travis-ci.org/axel3rd/files-archiver)
+
 # files-archiver
 Archive files (e.g: photos albums, ...) in ZIPs, respecting directories.
 Create/update ZIP only if more 3 files in directory.
