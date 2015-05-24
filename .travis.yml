@@ -1,5 +1,6 @@
 language: java
 install: true
+script: mvn install
 
 deploy:
   provider: releases
