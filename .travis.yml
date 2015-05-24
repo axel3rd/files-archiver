@@ -1,0 +1,9 @@
+language: java
+
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  file: "target/*.zip"
+  skip_cleanup: true
+  on:
+    tags: true
