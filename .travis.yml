@@ -1,11 +1,11 @@
 language: java
 install: true
-script: mvn install
+script: mvn package
 
 deploy:
   provider: releases
   api_key: "GITHUB OAUTH TOKEN"
-  file: "target/*.zip"
+  file: "target/files-archiver-.*-bin.zip"
   skip_cleanup: true
   on:
     tags: true
