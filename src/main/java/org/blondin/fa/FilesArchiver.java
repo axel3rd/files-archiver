@@ -149,6 +149,11 @@ public class FilesArchiver {
      * @throws IOException Read problem
      */
     private boolean filesMustBeCompressed(File dir, File zipFile, int numberOfFiles) throws IOException {
+        // No file, go out
+        if (numberOfFiles == 0) {
+            return false;
+        }
+
         boolean res = true;
 
         // List ZIP files of directory
@@ -166,7 +171,7 @@ public class FilesArchiver {
         } else if (files != null && files.length == 1) {
             // Verify coherence
             int nbrFilesInZip = ZipTools.getNumberOfFiles(zipFile);
-            if (files[0].getName().equals(zipFile.getName()) && numberOfFiles == nbrFilesInZip) {
+            if (files[0].getName().equals(zipFile.getName()) && numberOfFiles == nbrFilesInZip && nbrFilesInZip > 0) {
                 // If problem, file will be deleted
                 res = false;
             } else {
