@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.blondin.fa.utils.Constants;
 
 /**
  * Main class<br>
@@ -63,16 +62,17 @@ public final class Main {
         if (!dirOut.exists()) {
             exitWithError("Directory 'Out' doesn't exist");
         }
-        if (filesType == null || filesType.length() == 0 || filesType.split(Constants.FILES_TYPE_SEPARATOR).length == 0) {
+        final String separator = ",";
+        if (filesType == null || filesType.length() == 0 || filesType.split(separator).length == 0) {
             exitWithError("Files types doesn't valid");
         }
 
         // On y go
         String[] patternsForbidden = null;
         if (args.length >= ARGS_MIN) {
-            patternsForbidden = args[ARGS_MIN].split(Constants.FILES_TYPE_SEPARATOR);
+            patternsForbidden = args[ARGS_MIN].split(separator);
         }
-        FilesArchiver archiver = new FilesArchiver(dirIn, dirOut, filesType.split(Constants.FILES_TYPE_SEPARATOR), patternsForbidden);
+        FilesArchiver archiver = new FilesArchiver(dirIn, dirOut, filesType.split(separator), patternsForbidden);
         archiver.archive();
     }
 

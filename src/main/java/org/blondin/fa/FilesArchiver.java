@@ -14,7 +14,6 @@ import org.blondin.fa.io.FileFilterDirectory;
 import org.blondin.fa.io.FileFilterType;
 import org.blondin.fa.io.IOTools;
 import org.blondin.fa.io.ZipTools;
-import org.blondin.fa.utils.Constants;
 
 /**
  * Archiver
@@ -103,9 +102,8 @@ public class FilesArchiver {
         boolean mustBeCompress = filesMustBeCompressed(this.out, fileOut, files.length);
 
         // Compress if needed, depending number of files in input directory
-        boolean doArchive = mustBeCompress && files.length > Constants.MIN_FILES_ARCHIVES;
-        LOG.info("Directory must be archived : " + doArchive);
-        if (doArchive) {
+        LOG.info("Directory must be archived : " + mustBeCompress);
+        if (mustBeCompress) {
             ZipTools.zipFiles(files, fileOut);
         }
 
@@ -168,7 +166,7 @@ public class FilesArchiver {
         } else if (files != null && files.length == 1) {
             // Verify coherence
             int nbrFilesInZip = ZipTools.getNumberOfFiles(zipFile);
-            if (files[0].getName().equals(zipFile.getName()) && numberOfFiles == nbrFilesInZip && nbrFilesInZip > Constants.MIN_FILES_ARCHIVES) {
+            if (files[0].getName().equals(zipFile.getName()) && numberOfFiles == nbrFilesInZip) {
                 // If problem, file will be deleted
                 res = false;
             } else {

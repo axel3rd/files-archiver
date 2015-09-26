@@ -49,9 +49,6 @@ public class MainTest extends TestCase {
         // Must not exist, forbidden path
         assertFalse(new File("target/dataTest/out/__thumb", "test.jpg").exists());
 
-        // Not enough file in directory
-        assertFalse(new File("target/dataTest/out/car/scratch").exists());
-
         // Gif must not be compressed
         assertEquals(Integer.parseInt("8"), ZipTools.getNumberOfFiles(new File("target/dataTest/out/me", "me.zip")));
     }
