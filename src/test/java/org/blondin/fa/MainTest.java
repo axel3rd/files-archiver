@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
 import org.blondin.fa.io.ZipTools;
+import org.junit.Test;
 
 /**
  * Test class
@@ -17,7 +18,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception Problem
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         FileUtils.deleteDirectory(new File("target/dataTest"));
         FileUtils.copyDirectory(new File("dataTest"), new File("target/dataTest"));
@@ -29,6 +30,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception If problem
      */
+    @Test
     public void testMain() throws Exception {
         // Create "__thumb" in input and output directory, will be deleted
         File thumbIn = new File("target/dataTest/in/__thumb", "test.jpg");
@@ -58,6 +60,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception If problem
      */
+    @Test
     public void testForbidden() throws Exception {
         Main.main(new String[] { "target/dataTest/in", "target/dataTest/out", "jpg,jpeg", "thumb,cdslkj,.svn" });
         assertTrue(new File("target/dataTest/out/car", "car.zip").exists());
@@ -70,6 +73,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception If problem
      */
+    @Test
     public void testOrphan() throws Exception {
         Main.main(new String[] { "target/dataTest/in", "target/dataTest/out", "jpg,jpeg", "thumb,cdslkj,.svn" });
         new File("target/dataTest/out/car/orphan", "nothing.file").getParentFile().mkdirs();
@@ -82,6 +86,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception If problem
      */
+    @Test
     public void testNumberFileChange() throws Exception {
         // First time with gif
         Main.main(new String[] { "target/dataTest/in", "target/dataTest/out", "jpg,jpeg,gif", "thumb,cdslkj,.svn" });
@@ -97,6 +102,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception If problem
      */
+    @Test
     public void testCleanZip() throws Exception {
         Main.main(new String[] { "target/dataTest/in", "target/dataTest/out", "jpg,jpeg", "thumb,cdslkj,.svn" });
         new File("target/dataTest/out/car", "car2.zip").createNewFile();

@@ -108,33 +108,40 @@ public class FilesArchiver {
         }
 
         // Recursive if needed
-        if (this.recursive) {
-            FileFilter filterDir = new FileFilterDirectory();
+        if (!this.recursive) {
+            return;
+        }
+        FileFilter filterDir = new FileFilterDirectory();
 
-            // List output directory to delete orphan (after changes in input directory, ...)
-            File[] chieldsOut = this.out.listFiles(filterDir);
-            if (chieldsOut != null) {
-                for (int i = 0; i < chieldsOut.length; i++) {
-                    File sameIn = new File(this.in, chieldsOut[i].getName());
-                    if (!sameIn.exists()) {
-                        LOG.info("Deleting directory " + chieldsOut[i].getAbsolutePath());
-                        FileUtils.deleteDirectory(chieldsOut[i]);
-                    }
+        // List output directory to delete orphan (after changes in input directory, ...)
+        deleteOrphan(filterDir);
+
+        // List input directories for archive execution
+        for (File chieldIn : this.in.listFiles(filterDir)) {
+            // Output directory creation
+            File chieldOut = new File(this.out, chieldIn.getName());
+
+            // Let's go
+            FilesArchiver archiverChield = new FilesArchiver(chieldIn, chieldOut, this.filesType, this.patternsForbiddenPath);
+            archiverChield.archive();
+        }
+    }
+
+    /**
+     * Delete orphans in out directory
+     * 
+     * @param filterDir Filter
+     * @throws IOException Problem
+     */
+    private void deleteOrphan(FileFilter filterDir) throws IOException {
+        File[] chieldsOut = this.out.listFiles(filterDir);
+        if (chieldsOut != null) {
+            for (int i = 0; i < chieldsOut.length; i++) {
+                File sameIn = new File(this.in, chieldsOut[i].getName());
+                if (!sameIn.exists()) {
+                    LOG.info("Deleting directory " + chieldsOut[i].getAbsolutePath());
+                    FileUtils.deleteDirectory(chieldsOut[i]);
                 }
-            }
-
-            // List input directories
-            File[] chieldsIn = this.in.listFiles(filterDir);
-
-            // Archive execution
-            for (int i = 0; i < chieldsIn.length; i++) {
-                // Output directory creation
-                File chieldIn = chieldsIn[i];
-                File chieldOut = new File(this.out, chieldIn.getName());
-
-                // Let's go
-                FilesArchiver archiverChield = new FilesArchiver(chieldIn, chieldOut, this.filesType, this.patternsForbiddenPath);
-                archiverChield.archive();
             }
         }
     }
@@ -148,7 +155,7 @@ public class FilesArchiver {
      * @return true/false
      * @throws IOException Read problem
      */
-    private boolean filesMustBeCompressed(File dir, File zipFile, int numberOfFiles) throws IOException {
+    private static boolean filesMustBeCompressed(File dir, File zipFile, int numberOfFiles) throws IOException {
         // No file, go out
         if (numberOfFiles == 0) {
             return false;
@@ -157,17 +164,11 @@ public class FilesArchiver {
         boolean res = true;
 
         // List ZIP files of directory
-        FileFilter filter = new FileFilterType(new String[] { "zip" });
-        File[] files = dir.listFiles(filter);
+        File[] files = dir.listFiles(new FileFilterType(new String[] { "zip" }));
         if (files != null && files.length > 1) {
             // Delete all ZIP
             LOG.info("The " + files.length + " ZIP files in 'Out' directory deleted because number > 1");
-            for (int i = 0; i < files.length; i++) {
-                boolean resDel = files[i].delete();
-                if (!resDel) {
-                    throw new IOException("Can't delete : " + files[i].getAbsolutePath());
-                }
-            }
+            IOTools.delete(files);
         } else if (files != null && files.length == 1) {
             // Verify coherence
             int nbrFilesInZip = ZipTools.getNumberOfFiles(zipFile);
