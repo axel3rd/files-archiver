@@ -6,8 +6,9 @@
     </properties>
     <body>
         <release version="1.0.3" date="xx-08-2015" description="Update">
-            <action type="update" dev="ALO">Javadoc and comments French translation.</action>
+            <action type="update" dev="ALO">Translate French Javadoc and comments in English.</action>
             <action type="update" dev="ALO">Dependencies update.</action>
+            <action type="update" dev="ALO">SonarQube quality flaw.</action>
             <action type="remove" dev="ALO">Minimum files in directory for archive.</action>
         </release>
         <release version="1.0.2" date="11-11-2010" description="Fix">
