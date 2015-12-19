@@ -2,12 +2,6 @@
 
 set -euo pipefail
 
-function installTravisTools {
-  mkdir ~/.local
-  curl -sSL https://github.com/SonarSource/travis-utils/tarball/v21 | tar zx --strip-components 1 -C ~/.local
-  source ~/.local/bin/install
-}
-
 function strongEcho {
   echo ""
   echo "================ $1 ================="
@@ -16,11 +10,6 @@ function strongEcho {
 case "$TARGET" in
 
 CI)
-  echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
-  echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}"
-  echo "TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG"
-  echo "SONAR_HOST_URL=$SONAR_HOST_URL"
-  echo "GITHUB_TOKEN=$GITHUB_TOKEN"
   if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "${TRAVIS_BRANCH}" == "master" ] && [ -n "$GITHUB_TOKEN" ]; then
     # For security reasons environment variables are not available on the pull requests
     # coming from outside repositories
@@ -51,43 +40,6 @@ CI)
     # No need for Maven goal "install" as the generated JAR file does not need to be installed
     # in Maven local repository
     mvn verify -B -e -V
-  fi
-  ;;
-
-POSTGRES)
-  installTravisTools
-
-  psql -c 'create database sonar;' -U postgres
-
-  runDatabaseCI "postgresql" "jdbc:postgresql://localhost/sonar" "postgres" ""
-  ;;
-
-MYSQL)
-  installTravisTools
-
-  mysql -e "CREATE DATABASE sonar CHARACTER SET UTF8;" -uroot
-  mysql -e "CREATE USER 'sonar'@'localhost' IDENTIFIED BY 'sonar';" -uroot
-  mysql -e "GRANT ALL ON sonar.* TO 'sonar'@'localhost';" -uroot
-  mysql -e "FLUSH PRIVILEGES;" -uroot
-
-  runDatabaseCI "mysql" "jdbc:mysql://localhost/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance" "sonar" "sonar"
-  ;;
-
-WEB)
-  set +eu
-  source ~/.nvm/nvm.sh && nvm install 4
-  cd server/sonar-web && npm install && npm test
-  ;;
-
-IT)
-  if [ "$IT_CATEGORY" == "Plugins" ] && [ ! -n "$GITHUB_TOKEN" ]; then
-    echo "This job is ignored as it needs to access a private GitHub repository"
-  else
-    installTravisTools
-
-    start_xvfb
-
-    mvn install -Pit,dev -DskipTests -Dcategory=$IT_CATEGORY -Dmaven.test.redirectTestOutputToFile=false -e -Dsource.skip=true
   fi
   ;;
 
