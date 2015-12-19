@@ -18,6 +18,8 @@ case "$TARGET" in
 CI)
   echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
   echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+  echo "TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG"
+  echo "SONAR_HOST_URL=$SONAR_HOST_URL"
   echo "GITHUB_TOKEN=$GITHUB_TOKEN"
   if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "${TRAVIS_BRANCH}" == "master" ] && [ -n "$GITHUB_TOKEN" ]; then
     # For security reasons environment variables are not available on the pull requests
