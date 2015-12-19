@@ -1,4 +1,8 @@
 language: java
+script: ./travis.sh
+
+env:
+  - TARGET=CI
 
 deploy:
   provider: releases
