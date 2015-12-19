@@ -93,7 +93,7 @@ public final class ZipTools {
             LOG.error(e.getMessage(), e);
             res = -1;
         } finally {
-            if (zf != null) {
+            if (zf != null) { // NOSONAR FP SONARJAVA-1295 fixed in v3.9
                 zf.close();
             }
         }
