@@ -1,10 +1,10 @@
 language: java
-before_script: chmod +x travis.sh
-script: ./travis.sh
 
-env:
-  - TARGET=CI
-
+script:
+ - jdk_switcher use oraclejdk8 
+ - mvn --batch-mode --errors --show-version clean verify
+ - mvn --batch-mode --errors --show-version sonar:sonar -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.github.oauth=$GITHUB_TOKEN
+         
 deploy:
   provider: releases
   api_key: "GITHUB OAUTH TOKEN"
