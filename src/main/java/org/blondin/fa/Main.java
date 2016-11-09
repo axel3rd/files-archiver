@@ -17,15 +17,10 @@ import org.apache.commons.logging.LogFactory;
  */
 public final class Main {
 
-    /** Logger */
     private static final Log LOG = LogFactory.getLog(Main.class);
-
-    /** Number of arguments minimum */
     private static final int ARGS_MIN = 3;
+    private static final String SEPARATOR = ",";
 
-    /**
-     * Constructeur
-     */
     private Main() {
         super();
     }
@@ -36,18 +31,20 @@ public final class Main {
      * @param args Arguments
      * @throws IOException Read problem
      */
-    public static void main(String[] args) throws IOException {
+    public static int main(String[] args) throws IOException {
 
         if (args == null || args.length < ARGS_MIN) {
-            exitWithError("Usage : java -jar files-archiver-x.y.z.jar inputDirectory outputDirectory fileType1,fileType2 [patternForbidden1,patternForbiddenX]");
+            return exitWithError(
+                    "Usage : java -jar files-archiver-x.y.z.jar inputDirectory outputDirectory fileType1,fileType2 [patternForbidden1,patternForbiddenX]");
         }
 
         LOG.info("--- Files Archiver ---");
         LOG.info("In directory : " + args[0]);
         LOG.info("Out directory : " + args[1]);
         LOG.info("Files type : " + args[2]);
+
         if (args.length >= ARGS_MIN) {
-            LOG.info("Pattern(s) forbidden : " + args[ARGS_MIN]);
+            LOG.info(String.format("Forbidden Pattern(s)  : %s", args[ARGS_MIN]));
         }
 
         // Main directories
@@ -55,36 +52,38 @@ public final class Main {
         File dirOut = new File(args[1]);
         String filesType = args[2];
 
-        // Test existence
-        if (!dirIn.exists()) {
-            exitWithError("Directory 'In' doesn't exist");
-        }
-        if (!dirOut.exists()) {
-            exitWithError("Directory 'Out' doesn't exist");
-        }
-        final String separator = ",";
-        if (filesType == null || filesType.length() == 0 || filesType.split(separator).length == 0) {
-            exitWithError("Files types doesn't valid");
-        }
+        // Test existences
+        checks(dirIn, dirOut, filesType);
 
-        // On y go
+        // Lets go
         String[] patternsForbidden = null;
         if (args.length >= ARGS_MIN) {
-            patternsForbidden = args[ARGS_MIN].split(separator);
+            patternsForbidden = args[ARGS_MIN].split(SEPARATOR);
         }
-        FilesArchiver archiver = new FilesArchiver(dirIn, dirOut, filesType.split(separator), patternsForbidden);
+        FilesArchiver archiver = new FilesArchiver(dirIn, dirOut, filesType.split(SEPARATOR), patternsForbidden);
         archiver.archive();
+        return 0;
     }
 
-    /**
-     * Exit error with message
-     * 
-     * @param message Message
-     */
-    private static void exitWithError(String message) {
+    private static int checks(File dirIn, File dirOut, String filesType) {
+        if (!dirIn.exists()) {
+            return exitWithError("Directory 'In' doesn't exist");
+        }
+        if (!dirOut.exists()) {
+            return exitWithError("Directory 'Out' doesn't exist");
+        }
+        if (filesType == null || filesType.length() == 0 || filesType.split(SEPARATOR).length == 0) {
+            return exitWithError("Files types doesn't valid");
+        }
+        return 0;
+    }
+
+    private static int exitWithError(String message) {
+        final int code = 1;
         LOG.fatal(message);
         // CHECKSTYLE:OFF Error exit
-        System.exit(1); // NOSONAR : Error exit
+        System.exit(code); // NOSONAR : Error exit
         // CHECKSTYLE:ON
+        return code;
     }
 }

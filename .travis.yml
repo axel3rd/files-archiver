@@ -1,10 +1,11 @@
 language: java
-before_script: chmod +x travis.sh
-script: ./travis.sh
+jdk:
+  - oraclejdk8
 
-env:
-  - TARGET=CI
-
+script:
+ - mvn --batch-mode --errors --show-version clean verify
+ - if [[ -n $SONAR_HOST_URL && -n $SONAR_TOKEN && -n $GITHUB_TOKEN ]]; then mvn --batch-mode --errors --show-version sonar:sonar -Dsonar.analysis.mode=issues -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG; fi
+         
 deploy:
   provider: releases
   api_key: "GITHUB OAUTH TOKEN"

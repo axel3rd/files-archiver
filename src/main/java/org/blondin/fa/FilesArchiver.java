@@ -177,9 +177,9 @@ public class FilesArchiver {
                 res = false;
             } else {
                 LOG.info("Deleting " + files[0].getAbsolutePath() + " because name isn't good");
-                files[0].delete();
+                FileUtils.forceDelete(files[0]);
             }
-        }// If 0, it is OK
+        } // If 0, it is OK
         return res;
     }
 }
