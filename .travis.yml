@@ -4,7 +4,7 @@ jdk:
 
 script:
  - mvn --batch-mode --errors --show-version clean verify
- - if [ -n $SONAR_HOST_URL && -n $SONAR_TOKEN && -n $GITHUB_TOKEN ]; then mvn --batch-mode --errors --show-version sonar:sonar -Dsonar.analysis.mode=issues -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG; fi
+ - if [[ -n $SONAR_HOST_URL && -n $SONAR_TOKEN && -n $GITHUB_TOKEN ]]; then mvn --batch-mode --errors --show-version sonar:sonar -Dsonar.analysis.mode=issues -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG; fi
          
 deploy:
   provider: releases
