@@ -33,6 +33,8 @@ public final class Main {
      */
     public static int main(String[] args) throws IOException {
 
+        System.out.println("This is a SonarQube issue with https://sonarqube.com/");
+
         if (args == null || args.length < ARGS_MIN) {
             return exitWithError(
                     "Usage : java -jar files-archiver-x.y.z.jar inputDirectory outputDirectory fileType1,fileType2 [patternForbidden1,patternForbiddenX]");
