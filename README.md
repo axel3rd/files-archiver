@@ -17,3 +17,5 @@ __Sample__ for photos albums :
 ```
 java -jar files-archiver-x.y.z.jar /inputDir/albums/ /outputDir/archives/ jpg,gif,avi,mov,mpeg,mp4 __thumb,__small
 ```
+
+Test PR foo bar 2
