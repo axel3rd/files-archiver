@@ -1,20 +1,18 @@
 language: java
+dist: trusty
 jdk:
- - oraclejdk7
- - oraclejdk8
-
-# Run all integration tests and SonarQube GitHub integration only if PullRequest (and java 8 runner)
+- oraclejdk8
+- oraclejdk9
+- openjdk10
+- oraclejdk11
+cache:
+  directories:
+  - $HOME/.m2
+addons:
+  sonarcloud:
+    organization: axel3rd-github
+before_script:
+- echo Current build is on Java $JAVA_HOME
 script:
- - mvn --batch-mode --errors --show-version clean verify
- - if [[ $(echo $JAVA_HOME | grep 8) && -n TRAVIS_PULL_REQUEST && $TRAVIS_PULL_REQUEST != "false" && -n $SONAR_TOKEN && -n $GITHUB_TOKEN ]]; then mvn --batch-mode --errors --show-version sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONAR_TOKEN -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG; fi
-         
-deploy:
-  provider: releases
-  api_key: "GITHUB OAUTH TOKEN"
-  file: "target/files-archiver-.*-bin.zip"
-  skip_cleanup: true
-  on:
-    tags: true
-    
-notifications:
-  email: false
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package
+- if [ "$JAVA_HOME" = "/usr/lib/jvm/java-8-oracle" ]; then mvn sonar:sonar; fi
