@@ -31,10 +31,10 @@ public final class Main {
      * @param args Arguments
      * @throws IOException Read problem
      */
-    public static int main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         if (args == null || args.length < ARGS_MIN) {
-            return exitWithError(
+            exitWithError(
                     "Usage : java -jar files-archiver-x.y.z.jar inputDirectory outputDirectory fileType1,fileType2 [patternForbidden1,patternForbiddenX]");
         }
 
@@ -62,28 +62,25 @@ public final class Main {
         }
         FilesArchiver archiver = new FilesArchiver(dirIn, dirOut, filesType.split(SEPARATOR), patternsForbidden);
         archiver.archive();
-        return 0;
     }
 
-    private static int checks(File dirIn, File dirOut, String filesType) {
+    private static void checks(File dirIn, File dirOut, String filesType) {
         if (!dirIn.exists()) {
-            return exitWithError("Directory 'In' doesn't exist");
+            exitWithError("Directory 'In' doesn't exist");
         }
         if (!dirOut.exists()) {
-            return exitWithError("Directory 'Out' doesn't exist");
+            exitWithError("Directory 'Out' doesn't exist");
         }
         if (filesType == null || filesType.length() == 0 || filesType.split(SEPARATOR).length == 0) {
-            return exitWithError("Files types doesn't valid");
+            exitWithError("Files types doesn't valid");
         }
-        return 0;
     }
 
-    private static int exitWithError(String message) {
+    private static void exitWithError(String message) {
         final int code = 1;
         LOG.fatal(message);
         // CHECKSTYLE:OFF Error exit
         System.exit(code); // NOSONAR : Error exit
         // CHECKSTYLE:ON
-        return code;
     }
 }
