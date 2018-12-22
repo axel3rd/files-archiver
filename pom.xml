@@ -4,7 +4,7 @@
     <groupId>org.blondin</groupId>
     <artifactId>files-archiver</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <name>Files Archiver</name>
     <scm>
         <developerConnection>scm:git:https://axel3rd@github.com/axel3rd/files-archiver.git</developerConnection>
