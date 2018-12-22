@@ -5,6 +5,7 @@ package org.blondin.fa.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * IO Tools
@@ -44,10 +45,7 @@ public final class IOTools {
      */
     public static void delete(File[] files) throws IOException {
         for (File file : files) {
-            boolean resDel = file.delete();
-            if (!resDel) {
-                throw new IOException("Can't delete : " + file.getAbsolutePath());
-            }
+            Files.delete(file.toPath());
         }
     }
 }

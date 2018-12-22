@@ -19,13 +19,4 @@ public class FileFilterDirectory implements FileFilter {
         return file.isDirectory();
     }
 
-    /**
-     * Getter description
-     * 
-     * @return Description
-     */
-    public String getDescription() {
-        return "File directory filter";
-    }
-
 }

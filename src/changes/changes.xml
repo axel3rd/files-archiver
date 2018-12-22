@@ -5,9 +5,9 @@
         <title>ChangeLog</title>
     </properties>
     <body>
-        <release version="1.0.3" date="xx-08-2015" description="Update">
+        <release version="1.1" date="22-12-2018" description="Update">
             <action type="update" dev="ALO">Translate French Javadoc and comments in English.</action>
-            <action type="update" dev="ALO">Dependencies update.</action>
+            <action type="update" dev="ALO">Dependencies and plugins update.</action>
             <action type="update" dev="ALO">SonarQube quality flaw.</action>
             <action type="remove" dev="ALO">Minimum files in directory for archive.</action>
         </release>

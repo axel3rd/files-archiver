@@ -32,7 +32,7 @@ public class FileFilterType implements FileFilter {
 
     @Override
     public boolean accept(File file) {
-        int delim = file.getName().lastIndexOf(".") + 1;
+        int delim = file.getName().lastIndexOf('.') + 1;
         String type = file.getName().substring(delim, file.getName().length());
         if (type == null || type.length() == 0) {
             LOG.warn("FileType error : " + file.getAbsolutePath());
@@ -45,15 +45,6 @@ public class FileFilterType implements FileFilter {
             }
         }
         return false;
-    }
-
-    /**
-     * Getter description
-     * 
-     * @return Description
-     */
-    public String getDescription() {
-        return "File type filter";
     }
 
 }

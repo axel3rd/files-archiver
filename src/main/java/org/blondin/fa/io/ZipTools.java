@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
@@ -48,28 +47,26 @@ public final class ZipTools {
         zipFile.getParentFile().mkdirs();
 
         // Create the ZIP file
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFile));
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFile))) {
 
-        // Compress the files
-        for (int i = 0; i < files.length; i++) {
-            FileInputStream in = new FileInputStream(files[i]);
+            // Compress the files
+            for (int i = 0; i < files.length; i++) {
+                try (FileInputStream in = new FileInputStream(files[i])) {
 
-            // Add ZIP entry to output stream.
-            out.putNextEntry(new ZipEntry(files[i].getName()));
+                    // Add ZIP entry to output stream.
+                    out.putNextEntry(new ZipEntry(files[i].getName()));
 
-            // Transfer bytes from the file to the ZIP file
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
+                    // Transfer bytes from the file to the ZIP file
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+
+                    // Complete the entry
+                    out.closeEntry();
+                }
             }
-
-            // Complete the entry
-            out.closeEntry();
-            in.close();
         }
-
-        // Complete the ZIP file
-        out.close();
     }
 
     /**
@@ -82,20 +79,11 @@ public final class ZipTools {
     public static int getNumberOfFiles(File zipFile) throws IOException {
         // Open the ZIP file
         int res = 0;
-        ZipFile zf = null;
-        try {
-            zf = new ZipFile(zipFile);
+        try (ZipFile zf = new ZipFile(zipFile)) {
             res = zf.size();
-        } catch (ZipException e) {
-            LOG.error(e.getMessage(), e);
-            res = -1;
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             res = -1;
-        } finally {
-            if (zf != null) { // NOSONAR FP SONARJAVA-1295 fixed in v3.9
-                zf.close();
-            }
         }
         return res;
     }
