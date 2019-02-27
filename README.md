@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/axel3rd/files-archiver.svg?branch=master)](https://travis-ci.org/axel3rd/files-archiver)
+[![Build Status](https://travis-ci.org/axel3rd/files-archiver.svg?branch=master)](https://travis-ci.org/axel3rd/files-archiver) [![SonarCloud Status](https://sonarcloud.io/api/project_badges/measure?project=org.blondin%3Afiles-archiver&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.blondin%3Afiles-archiver)
 
 # files-archiver
 Archive files (e.g: photos albums, ...) in ZIPs, respecting directories.
