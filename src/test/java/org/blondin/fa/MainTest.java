@@ -2,11 +2,11 @@ package org.blondin.fa;
 
 import java.io.File;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.io.FileUtils;
 import org.blondin.fa.io.ZipTools;
 import org.junit.Test;
+
+import junit.framework.TestCase;
 
 /**
  * Test class
@@ -18,6 +18,7 @@ public class MainTest extends TestCase {
      * 
      * @throws Exception Problem
      */
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         FileUtils.deleteDirectory(new File("target/dataTest"));
