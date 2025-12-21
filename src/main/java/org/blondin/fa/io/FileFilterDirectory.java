@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.blondin.fa.io;
 
 import java.io.File;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.blondin.fa.io;
 
 import java.io.File;
@@ -34,7 +31,7 @@ public class FileFilterType implements FileFilter {
     public boolean accept(File file) {
         int delim = file.getName().lastIndexOf('.') + 1;
         String type = file.getName().substring(delim, file.getName().length());
-        if (type == null || type.length() == 0) {
+        if (type == null || type.isEmpty()) {
             LOG.warn("FileType error : " + file.getAbsolutePath());
             return false;
         }
