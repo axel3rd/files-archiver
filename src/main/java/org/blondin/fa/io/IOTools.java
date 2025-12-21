@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.blondin.fa.io;
 
 import java.io.File;
@@ -22,7 +19,7 @@ public final class IOTools {
     /**
      * If path contain forbidden pattern
      * 
-     * @param dir Directory
+     * @param dir               Directory
      * @param patternsForbidden List of forbidden patterns
      * @return true/false
      */

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.blondin.fa.io;
 
 import java.io.File;
@@ -35,7 +32,7 @@ public final class ZipTools {
     /**
      * ZIP some files
      * 
-     * @param files Files to compress
+     * @param files   Files to compress
      * @param zipFile File name
      * @throws IOException Problem
      */

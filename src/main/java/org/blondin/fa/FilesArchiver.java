@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.blondin.fa;
 
 import java.io.File;
@@ -41,11 +38,11 @@ public class FilesArchiver {
     /**
      * Constructor
      * 
-     * @param in Input directory
-     * @param out Output directory
-     * @param filesType File type to compress
+     * @param in                    Input directory
+     * @param out                   Output directory
+     * @param filesType             File type to compress
      * @param patternsForbiddenPath File pattern to exclude : not to compress or delete
-     * @param recursive Do archives in sub directories
+     * @param recursive             Do archives in sub directories
      */
     public FilesArchiver(File in, File out, String[] filesType, String[] patternsForbiddenPath, boolean recursive) {
         super();
@@ -59,9 +56,9 @@ public class FilesArchiver {
     /**
      * Constructor
      * 
-     * @param in Input directory
-     * @param out Output directory
-     * @param filesType File type to compress
+     * @param in                    Input directory
+     * @param out                   Output directory
+     * @param filesType             File type to compress
      * @param patternsForbiddenPath File pattern to exclude : not to compress or delete
      */
     public FilesArchiver(File in, File out, String[] filesType, String[] patternsForbiddenPath) {
@@ -80,8 +77,7 @@ public class FilesArchiver {
         // If path contains a forbidden pattern, delete destination and break
         if (IOTools.pathContainForbiddenPattern(this.out, this.patternsForbiddenPath)) {
             boolean dirOutMustBedeleted = this.out.exists();
-            LOG.info("'In/Out' directory contains forbidden pattern so doesn't archived ('Out' directory must be deleted : " + dirOutMustBedeleted
-                    + ")");
+            LOG.info("'In/Out' directory contains forbidden pattern so doesn't archived ('Out' directory must be deleted : " + dirOutMustBedeleted + ")");
             if (dirOutMustBedeleted) {
                 FileUtils.deleteDirectory(this.out);
             }
@@ -149,8 +145,8 @@ public class FilesArchiver {
     /**
      * Check output directory to determine if input directory must be compressed.<br>
      * 
-     * @param dir Output directory to check
-     * @param zipFile ZIP file name
+     * @param dir           Output directory to check
+     * @param zipFile       ZIP file name
      * @param numberOfFiles Number of files in ZIP
      * @return true/false
      * @throws IOException Read problem

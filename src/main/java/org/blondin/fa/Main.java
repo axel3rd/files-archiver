@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.blondin.fa;
 
 import java.io.File;
@@ -34,8 +31,7 @@ public final class Main {
     public static void main(String[] args) throws IOException {
 
         if (args == null || args.length < ARGS_MIN) {
-            exitWithError(
-                    "Usage : java -jar files-archiver-x.y.z.jar inputDirectory outputDirectory fileType1,fileType2 [patternForbidden1,patternForbiddenX]");
+            exitWithError("Usage : java -jar files-archiver-x.y.z.jar inputDirectory outputDirectory fileType1,fileType2 [patternForbidden1,patternForbiddenX]");
         }
 
         LOG.info("--- Files Archiver ---");
@@ -71,7 +67,7 @@ public final class Main {
         if (!dirOut.exists()) {
             exitWithError("Directory 'Out' doesn't exist");
         }
-        if (filesType == null || filesType.length() == 0 || filesType.split(SEPARATOR).length == 0) {
+        if (filesType == null || filesType.isEmpty() || filesType.split(SEPARATOR).length == 0) {
             exitWithError("Files types doesn't valid");
         }
     }
